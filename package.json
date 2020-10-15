@@ -1,0 +1,30 @@
+{
+  "name": "sdk",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "eslint src/**/*.js",
+    "prettier": "prettier --write ./src/**/*.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "web3": "^1.3.0",
+    "web3-eea": "^0.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "husky": "^4.3.0",
+    "jest": "^26.5.3",
+    "prettier": "^2.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn prettier"
+    }
+  }
+}
