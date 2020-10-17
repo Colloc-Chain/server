@@ -12,5 +12,6 @@ module.exports = {
   plugins: ['jest'],
   rules: {
     'func-names': 'off',
+    'arrow-parens': 'as-needed',
   },
 };
