@@ -1,4 +1,4 @@
-const { getERC20 } = require('../../libs');
+const { getERC20 } = require('../../libs/smart-contracts');
 
 const erc20 = getERC20();
 
