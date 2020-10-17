@@ -23,9 +23,9 @@ const getUser = async (req, res, next) => {
 
 const registerUser = async (req, res, next) => {
   try {
-    const { firstname, lastname } = req.body;
+    const { firstname, lastname, status } = req.body;
     const privateKey = createPrivateKey();
-    const result = await registerOneUser(firstname, lastname, privateKey);
+    const result = await registerOneUser(firstname, lastname, status, privateKey);
     res.status(200).json({ result });
   } catch (e) {
     next(e);

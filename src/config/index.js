@@ -11,6 +11,7 @@ const ERC721_ADDRESS = 'cfeD223fAb2A41b5a5a5F9AaAe2D1e882cb6Fe2D';
 
 const MASTER_KEY = 'c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3';
 
+const __mongo_uri__ = process.env.MONGO_URI;
 const __port__ = process.env.PORT || 3000;
 const __prod__ = process.env.NODE_ENV === 'production';
 
@@ -21,6 +22,7 @@ module.exports = {
   ERC20_ADDRESS,
   ERC721_ADDRESS,
   MASTER_KEY,
+  __mongo_uri__,
   __port__,
   __prod__,
 };

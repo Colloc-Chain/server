@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const { UserSchema } = require('./schemas');
+const { __mongo_uri__ } = require('../../config');
 
-mongoose.connect('mongodb://localhost:27017/jsp', {
+mongoose.connect(__mongo_uri__, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -17,11 +18,12 @@ function getUserById(id) {
   return User.findById(id);
 }
 
-function registerOneUser(firstname, lastname, privateKey) {
+function registerOneUser(firstname, lastname, status, privateKey) {
   const user = new User({
     _id: mongoose.Types.ObjectId(),
     firstname,
     lastname,
+    status,
     privateKey,
   });
 
