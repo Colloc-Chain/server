@@ -1,6 +1,17 @@
-const { getERC20 } = require('../../libs/smart-contracts');
+const { getOneSmartContract } = require('../../../libs/mongo/smart-contracts');
+const { getERC20 } = require('../../../libs/smart-contracts');
 
 const erc20 = getERC20();
+
+const getSmartContract = async (req, res, next) => {
+  try {
+    const { erc } = req.params;
+    const result = await getOneSmartContract(erc);
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
 
 const getTotalSupply = async (_, res, next) => {
   try {
@@ -22,6 +33,7 @@ const getBalanceOf = async (req, res, next) => {
 };
 
 module.exports = {
+  getSmartContract,
   getTotalSupply,
   getBalanceOf,
 };

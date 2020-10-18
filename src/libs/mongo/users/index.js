@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
-const { UserSchema } = require('./schemas');
-const { __mongo_uri__ } = require('../../config');
+const { UserSchema } = require('../schemas');
+// eslint-disable-next-line camelcase
+const { __mongo_uri__ } = require('../../../config');
 
 mongoose.connect(__mongo_uri__, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: true,
 });
 
 const User = mongoose.model('User', UserSchema);
