@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const cors = require('cors');
-const routes = require('./api/api.routes');
+const routes = require('./routes');
 const { notFound, errorHandler } = require('./middlewares');
 
 const app = express();

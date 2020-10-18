@@ -1,18 +1,7 @@
 const {
-  getOneSmartContract,
   registerOneSmartContract,
   deleteOneSmartContract,
-} = require('../../libs/mongo');
-
-const getSmartContract = async (req, res, next) => {
-  try {
-    const { erc } = req.params;
-    const result = await getOneSmartContract(erc);
-    res.status(200).json({ result });
-  } catch (e) {
-    next(e);
-  }
-};
+} = require('../../../libs/mongo/smart-contracts');
 
 const registerSmartContract = async (req, res, next) => {
   try {
@@ -44,7 +33,6 @@ const deleteSmartContract = async (req, res, next) => {
 };
 
 module.exports = {
-  getSmartContract,
   registerSmartContract,
   deleteSmartContract,
 };
