@@ -3,8 +3,8 @@ const { SmartContractSchema } = require('../schemas');
 
 const SmartContract = mongoose.model('SmartContract', SmartContractSchema);
 
-function getOneSmartContract(erc) {
-  return SmartContract.findOne({ erc });
+function getOneSmartContract(erc, projection) {
+  return SmartContract.findOne({ erc }, projection);
 }
 
 function registerOneSmartContract(erc, address, abi) {

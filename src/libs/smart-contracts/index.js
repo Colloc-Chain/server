@@ -1,23 +1,34 @@
+/* eslint-disable camelcase */
+
 const Web3 = require('web3');
 const Web3EEA = require('web3-eea');
 const AccountFactory = require('./account-factory');
 const { ERC20, ERC721 } = require('./ercs');
-// prettier-ignore
-// eslint-disable-next-line object-curly-newline
-const { WEB3_ENDPOINT, MASTER_KEY, ERC20_ADDRESS, ERC721_ADDRESS, ERC20_ABI, ERC721_ABI } = require('../../config')
+const { __web3_uri__, __master_key__ } = require('../config');
+const { getOneSmartContract } = require('../mongo/smart-contracts');
 
-const web3 = new Web3EEA(new Web3(WEB3_ENDPOINT));
-const erc20 = new ERC20(web3, ERC20_ADDRESS, ERC20_ABI);
-const erc721 = new ERC721(web3, ERC721_ADDRESS, ERC721_ABI);
-const factory = new AccountFactory(web3, MASTER_KEY, erc20, erc721);
+const web3 = new Web3EEA(new Web3(__web3_uri__));
 
-const getERC20 = () => erc20;
+async function getERC20() {
+  const { address, abi } = await getOneSmartContract('erc20');
+  return new ERC20(web3, address, abi);
+}
 
-const getERC721 = () => erc721;
+async function getERC721() {
+  const { address, abi } = await getOneSmartContract('erc721');
+  return new ERC721(web3, address, abi);
+}
 
-const getAccount = () => factory.create();
+async function getAccount() {
+  const erc20 = await getERC20();
+  const erc721 = await getERC721();
+  const factory = new AccountFactory(web3, __master_key__, erc20, erc721);
+  return factory.create();
+}
 
-const createPrivateKey = () => web3.eth.accounts.create().privateKey;
+function createPrivateKey() {
+  return web3.eth.accounts.create().privateKey;
+}
 
 module.exports = {
   getERC20,
