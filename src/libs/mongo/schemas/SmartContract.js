@@ -16,7 +16,7 @@ const SmartContractSchema = new Schema(
       required: true,
     },
     abi: {
-      type: String,
+      type: Array,
       required: true,
     },
   },
