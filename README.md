@@ -1,3 +1,26 @@
+### Setup
+
+You need to install MongoDB on your machine. Follow these [instructions](https://docs.mongodb.com/manual/installation/).
+
+### Config
+
+To make it work create a `.env` file in the root and add the following:
+
+```bash
+# server/.env
+
+NODE_ENV=development
+PORT=5000
+
+# PROD
+WEB3_URI=http://localhost:8545
+MONGO_URI=mongodb://localhost:27017/colloc-chain-prod
+
+# DEV
+WEB3_URI_DEV=http://localhost:8545
+MONGO_URI_DEV=mongodb://localhost:27017/colloc-chain-dev
+```
+
 ### Usage
 
 Clone repository
