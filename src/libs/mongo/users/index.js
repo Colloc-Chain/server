@@ -1,7 +1,5 @@
-const mongoose = require('../connection');
-const { UserSchema } = require('../schemas');
-
-const User = mongoose.model('User', UserSchema);
+const { Types } = require('mongoose');
+const { User } = require('../models');
 
 function getAllUsers() {
   return User.find({});
@@ -13,7 +11,7 @@ function getUserById(id) {
 
 function registerOneUser(firstname, lastname, status, privateKey) {
   const user = new User({
-    _id: mongoose.Types.ObjectId(),
+    _id: Types.ObjectId(),
     firstname,
     lastname,
     status,

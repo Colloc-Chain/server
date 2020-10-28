@@ -1,8 +1,8 @@
-const { Schema } = require('mongoose');
+const mongoose = require('../connection');
 
-const UserSchema = new Schema(
+const UserSchema = new mongoose.Schema(
   {
-    _id: Schema.Types.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     firstname: {
       type: String,
       required: true,
@@ -23,9 +23,10 @@ const UserSchema = new Schema(
   },
   {
     collection: 'users',
+    timestamps: true,
   },
 );
 
-module.exports = {
-  UserSchema,
-};
+const User = mongoose.model('User', UserSchema);
+
+module.exports = { User };

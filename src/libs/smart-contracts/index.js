@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-
 const Web3 = require('web3');
 const Web3EEA = require('web3-eea');
 const { ERC20, ERC721 } = require('./ercs');
