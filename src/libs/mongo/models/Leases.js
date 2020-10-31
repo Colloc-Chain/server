@@ -6,11 +6,32 @@ const LeaseSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
-    owner: {
+    ownerId: {
+      type: String,
+      required: true,
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ['studio'],
+    },
+    size: {
+      type: Number,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    city: {
       type: String,
       required: true,
     },
     price: {
+      type: Number,
+      required: true,
+    },
+    rooms: {
       type: Number,
       required: true,
     },

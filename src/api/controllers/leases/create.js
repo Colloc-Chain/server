@@ -2,10 +2,16 @@ const { OperationsManager } = require('../../../libs/operations');
 
 const createLease = async (req, res, next) => {
   try {
-    const { userId, price, maxTenants, tenants, tokenURI } = req.body;
+    // prettier-ignore
+    const { userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI } = req.body;
     const result = await OperationsManager.createLease(
       userId,
+      type,
+      size,
+      address,
+      city,
       price,
+      rooms,
       maxTenants,
       tenants,
       tokenURI,

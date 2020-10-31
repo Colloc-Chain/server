@@ -1,11 +1,29 @@
 const { Types } = require('mongoose');
 const { Lease } = require('../models');
 
-function registerLease(owner, price, maxTenants, tenants, tokenURI) {
+function getAllLeases(projection) {
+  return Lease.find({}, { ...projection, __v: 0 });
+}
+
+function getOneLeaseById(id, projection) {
+  return Lease.findById(id, { ...projection, __v: 0 });
+}
+
+function getAllLeasesByOwnerId(ownerId, projection) {
+  return Lease.find({ ownerId }, { ...projection, __v: 0 });
+}
+
+// prettier-ignore
+function registerLease(ownerId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
   const lease = new Lease({
     _id: Types.ObjectId(),
-    owner,
+    ownerId,
+    type,
+    size,
+    address,
+    city,
     price,
+    rooms,
     maxTenants,
     tenants,
     tokenURI,
@@ -14,5 +32,8 @@ function registerLease(owner, price, maxTenants, tenants, tokenURI) {
 }
 
 module.exports = {
+  getAllLeases,
+  getOneLeaseById,
+  getAllLeasesByOwnerId,
   registerLease,
 };

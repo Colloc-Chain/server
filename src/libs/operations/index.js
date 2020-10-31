@@ -12,7 +12,12 @@ const {
   deleteOneUser,
   updateOneUser,
 } = require('../mongo/users');
-const { registerLease } = require('../mongo/leases');
+const {
+  getAllLeases,
+  getOneLeaseById,
+  getAllLeasesByOwnerId,
+  registerLease,
+} = require('../mongo/leases');
 const { createWeb3Account } = require('./utils');
 const { __web3_uri__, __mongo_uri__, __master_key__ } = require('../config');
 
@@ -20,8 +25,12 @@ class Operations {
   constructor() {
     this.web3 = new Web3EEA(new Web3(__web3_uri__));
     this.privateKey = __master_key__;
+    this.init();
     this.getSmartContract = getOneSmartContract.bind(this);
     this.registerOneSmartContract = registerOneSmartContract.bind(this);
+    this.getAllLeases = getAllLeases.bind(this);
+    this.getOneLeaseById = getOneLeaseById.bind(this);
+    this.getAllLeasesByOwnerId = getAllLeasesByOwnerId.bind(this);
     this.getAllUsers = getAllUsers.bind(this);
     this.getUserById = getUserById.bind(this);
     this.updateOneUser = updateOneUser.bind(this);
@@ -60,7 +69,8 @@ class Operations {
     return registerOneUser(firstname, lastname, 'tenant', userAccount.privateKey);
   }
 
-  async createLease(userId, price, maxTenants, tenants, tokenURI) {
+  // prettier-ignore
+  async createLease(userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
     await this.init();
     const { status, privateKey } = await this.getUserById(userId);
 
@@ -71,7 +81,8 @@ class Operations {
     const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
     const userAccount = await accountFactory.create();
     await userAccount.createLease(price, maxTenants, tenants, tokenURI);
-    return registerLease(userAccount.address(), price, maxTenants, tenants, tokenURI);
+    // prettier-ignore
+    return registerLease(userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI);
   }
 }
 
