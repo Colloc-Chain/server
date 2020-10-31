@@ -5,6 +5,10 @@ function Account(web3, account, erc20, erc721) {
   this.erc721 = erc721;
 }
 
+Account.prototype.address = function () {
+  return this.account.address;
+};
+
 Account.prototype.isLandlord = function () {
   return this.erc721.isLandlord(this.account.address);
 };
@@ -13,20 +17,16 @@ Account.prototype.getLeaseById = function (tokenId) {
   return this.erc721.getLeaseById(tokenId);
 };
 
-Account.prototype.signTransaction = async function (payload, contractAddress) {
+Account.prototype.sendTransaction = async function (payload, to) {
   const nonce = await this.web3.eth.getTransactionCount(this.account.address);
   const tx = {
     data: payload,
     nonce,
-    to: contractAddress,
-    gas: 10000000,
+    to,
+    gas: 1000000,
   };
 
-  return this.account.signTransaction(tx);
-};
-
-Account.prototype.sendTransaction = async function (payload, contractAddress) {
-  const { rawTransaction } = await this.signTransaction(payload, contractAddress);
+  const { rawTransaction } = await this.account.signTransaction(tx);
   return this.web3.eth.sendSignedTransaction(rawTransaction);
 };
 

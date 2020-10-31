@@ -1,7 +1,4 @@
-const mongoose = require('../connection');
-const { SmartContractSchema } = require('../schemas');
-
-const SmartContract = mongoose.model('SmartContract', SmartContractSchema);
+const { SmartContract } = require('../models');
 
 function getOneSmartContract(erc, projection) {
   return SmartContract.findOne({ erc }, projection);

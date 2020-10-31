@@ -1,8 +1,8 @@
-const { getAllUsers, getUserById } = require('../../../libs/mongo/users');
+const { OperationsManager } = require('../../../libs/operations');
 
 const getUsers = async (_, res, next) => {
   try {
-    const result = await getAllUsers();
+    const result = await OperationsManager.getAllUsers();
     res.status(200).json({ result });
   } catch (e) {
     next(e);
@@ -12,7 +12,7 @@ const getUsers = async (_, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await getUserById(id);
+    const result = await OperationsManager.getUserById(id);
     res.status(200).json({ result });
   } catch (e) {
     next(e);

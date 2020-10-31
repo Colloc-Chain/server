@@ -5,13 +5,14 @@ module.exports = {
     node: true,
     'jest/globals': true,
   },
-  extends: ['airbnb-base'],
+  extends: ['airbnb-base', 'plugin:prettier/recommended'],
   parserOptions: {
     ecmaVersion: 12,
   },
-  plugins: ['jest'],
+  plugins: ['prettier', 'jest'],
   rules: {
     'func-names': 'off',
     'arrow-parens': 'off',
+    'prettier/prettier': 'error',
   },
 };

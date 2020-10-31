@@ -1,9 +1,9 @@
 const { OperationsManager } = require('../../../libs/operations');
 
-const getSmartContract = async (req, res, next) => {
+const deleteUser = async (req, res, next) => {
   try {
-    const { erc } = req.params;
-    const result = await OperationsManager.getSmartContract(erc);
+    const { id } = req.params;
+    const result = await OperationsManager.deleteUser(id);
     res.status(200).json({ result });
   } catch (e) {
     next(e);
@@ -11,5 +11,5 @@ const getSmartContract = async (req, res, next) => {
 };
 
 module.exports = {
-  getSmartContract,
+  deleteUser,
 };

@@ -1,9 +1,9 @@
-const { Schema } = require('mongoose');
+const mongoose = require('mongoose');
 
-const SmartContractSchema = new Schema(
+const SmartContractSchema = new mongoose.Schema(
   {
     _id: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     erc: {
@@ -22,9 +22,10 @@ const SmartContractSchema = new Schema(
   },
   {
     collection: 'smart-contracts',
+    timestamps: true,
   },
 );
 
-module.exports = {
-  SmartContractSchema,
-};
+const SmartContract = mongoose.model('SmartContract', SmartContractSchema);
+
+module.exports = { SmartContract };
