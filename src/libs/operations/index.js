@@ -17,8 +17,16 @@ const {
   getOneLeaseById,
   getAllLeasesByOwnerId,
   registerLease,
+  removeLease,
 } = require('../mongo/leases');
 const { __web3_uri__, __mongo_uri__, __master_key__ } = require('../config');
+
+mongoose.connect(__mongo_uri__, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: true,
+});
 
 class Operations {
   constructor() {
@@ -37,12 +45,6 @@ class Operations {
   }
 
   async init() {
-    await mongoose.connect(__mongo_uri__, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: true,
-    });
     await this.getERCs();
   }
 
@@ -88,6 +90,21 @@ class Operations {
     await userAccount.createLease(price, maxTenants, tenants, tokenURI);
     // prettier-ignore
     return registerLease(tokenId, userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI);
+  }
+
+  async deleteLease(userId, leaseId) {
+    await this.init();
+    const { status, privateKey } = await this.getUserById(userId);
+    const { ownerId, tokenId } = await this.getOneLeaseById(leaseId);
+
+    if (status !== 'landlord' || userId !== ownerId) {
+      throw new Error(`deleteLease: user ${userId} not landlord or not owner of this lease`);
+    }
+
+    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
+    const userAccount = await accountFactory.create();
+    await userAccount.removeLease(tokenId);
+    return removeLease(leaseId);
   }
 }
 

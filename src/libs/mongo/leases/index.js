@@ -32,9 +32,14 @@ function registerLease(tokenId, ownerId, type, size, address, city, price, rooms
   return lease.save();
 }
 
+function removeLease(id) {
+  return Lease.findByIdAndDelete(id);
+}
+
 module.exports = {
   getAllLeases,
   getOneLeaseById,
   getAllLeasesByOwnerId,
   registerLease,
+  removeLease,
 };
