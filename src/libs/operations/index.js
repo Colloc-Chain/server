@@ -56,14 +56,14 @@ class Operations {
     this.nodeAccount = await accountFactory.create();
   }
 
-  async registerLandlordAccount(firstname, lastname) {
+  async createLandlordAccount(firstname, lastname) {
     await this.init();
     const userAccount = createWeb3Account(this.web3);
     await this.nodeAccount.registerLandlord(userAccount.address);
     return registerOneUser(firstname, lastname, 'landlord', userAccount.privateKey);
   }
 
-  async registerTenantAccount(firstname, lastname) {
+  async createTenantAccount(firstname, lastname) {
     await this.init();
     const userAccount = createWeb3Account(this.web3);
     return registerOneUser(firstname, lastname, 'tenant', userAccount.privateKey);
