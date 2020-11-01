@@ -14,9 +14,10 @@ function getAllLeasesByOwnerId(ownerId, projection) {
 }
 
 // prettier-ignore
-function registerLease(ownerId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
+function registerLease(tokenId, ownerId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
   const lease = new Lease({
     _id: Types.ObjectId(),
+    tokenId,
     ownerId,
     type,
     size,

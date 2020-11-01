@@ -11,6 +11,10 @@ ERC721.prototype.contract = function () {
   return this.contract;
 };
 
+ERC721.prototype.getTotalTokensCreated = function () {
+  return this.contract.methods.getTotalTokensCreated().call();
+};
+
 ERC721.prototype.totalSupply = function () {
   return this.contract.methods.totalSupply().call();
 };

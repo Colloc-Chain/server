@@ -83,9 +83,11 @@ class Operations {
 
     const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
     const userAccount = await accountFactory.create();
+    // get tokenId before creating new one to preserve same index => tokenId starts at 0
+    const tokenId = await this.erc721.getTotalTokensCreated()
     await userAccount.createLease(price, maxTenants, tenants, tokenURI);
     // prettier-ignore
-    return registerLease(userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI);
+    return registerLease(tokenId, userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI);
   }
 }
 

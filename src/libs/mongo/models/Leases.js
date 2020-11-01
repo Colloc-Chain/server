@@ -6,6 +6,10 @@ const LeaseSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
+    tokenId: {
+      type: Number,
+      required: true,
+    },
     ownerId: {
       type: String,
       required: true,
