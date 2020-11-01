@@ -18,7 +18,6 @@ const {
   getAllLeasesByOwnerId,
   registerLease,
 } = require('../mongo/leases');
-const { createWeb3Account } = require('./utils');
 const { __web3_uri__, __mongo_uri__, __master_key__ } = require('../config');
 
 class Operations {
@@ -56,16 +55,20 @@ class Operations {
     this.nodeAccount = await accountFactory.create();
   }
 
+  createWeb3Account() {
+    return this.web3.eth.accounts.create();
+  }
+
   async createLandlordAccount(firstname, lastname) {
     await this.init();
-    const userAccount = createWeb3Account(this.web3);
+    const userAccount = this.createWeb3Account(this.web3);
     await this.nodeAccount.registerLandlord(userAccount.address);
     return registerOneUser(firstname, lastname, 'landlord', userAccount.privateKey);
   }
 
   async createTenantAccount(firstname, lastname) {
     await this.init();
-    const userAccount = createWeb3Account(this.web3);
+    const userAccount = this.createWeb3Account(this.web3);
     return registerOneUser(firstname, lastname, 'tenant', userAccount.privateKey);
   }
 
