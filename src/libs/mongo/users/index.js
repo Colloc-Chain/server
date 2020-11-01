@@ -9,6 +9,10 @@ function getUserById(id) {
   return User.findById(id);
 }
 
+function getOwner() {
+  return User.findOwner();
+}
+
 function registerOneUser(firstname, lastname, status, privateKey) {
   const user = new User({
     _id: Types.ObjectId(),
@@ -32,6 +36,7 @@ function deleteOneUser(id) {
 module.exports = {
   getAllUsers,
   getUserById,
+  getOwner,
   registerOneUser,
   updateOneUser,
   deleteOneUser,

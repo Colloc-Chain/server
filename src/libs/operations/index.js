@@ -8,6 +8,7 @@ const { getOneSmartContract, registerOneSmartContract } = require('../mongo/smar
 const {
   getAllUsers,
   getUserById,
+  getOwner,
   registerOneUser,
   deleteOneUser,
   updateOneUser,
@@ -19,7 +20,7 @@ const {
   registerLease,
   removeLease,
 } = require('../mongo/leases');
-const { __web3_uri__, __mongo_uri__, __master_key__ } = require('../config');
+const { __web3_uri__, __mongo_uri__ } = require('../config');
 
 mongoose.connect(__mongo_uri__, {
   useNewUrlParser: true,
@@ -31,7 +32,6 @@ mongoose.connect(__mongo_uri__, {
 class Operations {
   constructor() {
     this.web3 = new Web3EEA(new Web3(__web3_uri__));
-    this.privateKey = __master_key__;
     this.init();
     this.getSmartContract = getOneSmartContract.bind(this);
     this.registerOneSmartContract = registerOneSmartContract.bind(this);
@@ -45,16 +45,13 @@ class Operations {
   }
 
   async init() {
-    await this.getERCs();
-  }
-
-  async getERCs() {
     const { address: erc20Address, abi: erc20Abi } = await getOneSmartContract('erc20');
     const { address: erc721Address, abi: erc721Abi } = await getOneSmartContract('erc721');
     this.erc20 = new ERC20(this.web3, erc20Address, erc20Abi);
     this.erc721 = new ERC721(this.web3, erc721Address, erc721Abi);
-    const accountFactory = new AccountFactory(this.web3, this.privateKey, this.erc20, this.erc721);
-    this.nodeAccount = await accountFactory.create();
+    const { privateKey } = await getOwner();
+    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
+    this.ownerAccount = await accountFactory.create();
   }
 
   createWeb3Account() {
@@ -64,7 +61,7 @@ class Operations {
   async createLandlordAccount(firstname, lastname) {
     await this.init();
     const userAccount = this.createWeb3Account(this.web3);
-    await this.nodeAccount.registerLandlord(userAccount.address);
+    await this.ownerAccount.registerLandlord(userAccount.address);
     return registerOneUser(firstname, lastname, 'landlord', userAccount.privateKey);
   }
 

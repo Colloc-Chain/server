@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema(
   },
 );
 
+UserSchema.statics.findOwner = function (projection) {
+  return this.findOne({ status: 'owner' }, { ...projection, __v: 0 });
+};
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = { User };
