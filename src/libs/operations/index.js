@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const Web3 = require('web3');
 const Web3EEA = require('web3-eea');
-const mongoose = require('mongoose');
+const { __web3_uri__ } = require('../config');
 const AccountFactory = require('../account-factory');
 const { ERC20, ERC721 } = require('../smart-contracts');
 const { getOneSmartContract, registerOneSmartContract } = require('../mongo/smart-contracts');
@@ -20,14 +20,6 @@ const {
   registerLease,
   removeLease,
 } = require('../mongo/leases');
-const { __web3_uri__, __mongo_uri__ } = require('../config');
-
-mongoose.connect(__mongo_uri__, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: true,
-});
 
 class Operations {
   constructor() {
@@ -59,21 +51,18 @@ class Operations {
   }
 
   async createLandlordAccount(firstname, lastname) {
-    await this.init();
     const userAccount = this.createWeb3Account(this.web3);
     await this.ownerAccount.registerLandlord(userAccount.address);
     return registerOneUser(firstname, lastname, 'landlord', userAccount.privateKey);
   }
 
   async createTenantAccount(firstname, lastname) {
-    await this.init();
     const userAccount = this.createWeb3Account(this.web3);
     return registerOneUser(firstname, lastname, 'tenant', userAccount.privateKey);
   }
 
   // prettier-ignore
   async createLease(userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
-    await this.init();
     const { status, privateKey } = await this.getUserById(userId);
 
     if (status !== 'landlord') {
@@ -83,14 +72,12 @@ class Operations {
     const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
     const userAccount = await accountFactory.create();
     // get tokenId before creating new one to preserve same index => tokenId starts at 0
-    const tokenId = await this.erc721.getTotalTokensCreated()
+    const tokenId = await this.erc721.getTotalTokensCreated();
     await userAccount.createLease(price, maxTenants, tenants, tokenURI);
-    // prettier-ignore
     return registerLease(tokenId, userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI);
   }
 
   async deleteLease(userId, leaseId) {
-    await this.init();
     const { status, privateKey } = await this.getUserById(userId);
     const { ownerId, tokenId } = await this.getOneLeaseById(leaseId);
 
