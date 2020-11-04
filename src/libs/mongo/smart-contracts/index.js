@@ -1,4 +1,4 @@
-const { SmartContract } = require('../models');
+const { SmartContract } = require('@libs/mongo/models');
 
 function getOneSmartContract(erc, projection) {
   return SmartContract.findOne({ erc }, projection);

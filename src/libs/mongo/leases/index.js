@@ -1,5 +1,5 @@
 const { Types } = require('mongoose');
-const { Lease } = require('../models');
+const { Lease } = require('@libs/mongo/models');
 
 function getAllLeases(projection) {
   return Lease.find({}, { ...projection, __v: 0 });

@@ -1,5 +1,5 @@
 const { Types } = require('mongoose');
-const { User } = require('../models');
+const { User } = require('@libs/mongo/models');
 
 function getAllUsers() {
   return User.find({});

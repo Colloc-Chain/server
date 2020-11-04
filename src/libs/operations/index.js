@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 const Web3 = require('web3');
 const Web3EEA = require('web3-eea');
-const { __web3_uri__ } = require('../config');
-const AccountFactory = require('../account-factory');
-const { ERC20, ERC721 } = require('../smart-contracts');
-const { getOneSmartContract, registerOneSmartContract } = require('../mongo/smart-contracts');
+const { __web3_uri__ } = require('@libs/config');
+const AccountFactory = require('@libs/account-factory');
+const { ERC20, ERC721 } = require('@libs/smart-contracts');
+const { getOneSmartContract, registerOneSmartContract } = require('@libs/mongo/smart-contracts');
 const {
   getAllUsers,
   getUserById,
@@ -12,14 +12,14 @@ const {
   registerOneUser,
   deleteOneUser,
   updateOneUser,
-} = require('../mongo/users');
+} = require('@libs/mongo/users');
 const {
   getAllLeases,
   getOneLeaseById,
   getAllLeasesByOwnerId,
   registerLease,
   removeLease,
-} = require('../mongo/leases');
+} = require('@libs/mongo/leases');
 
 class Operations {
   constructor() {
