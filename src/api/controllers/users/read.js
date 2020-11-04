@@ -1,4 +1,4 @@
-const { OperationsManager } = require('../../../libs/operations');
+const { OperationsManager } = require('@libs/operations');
 
 const getUsers = async (_, res, next) => {
   try {

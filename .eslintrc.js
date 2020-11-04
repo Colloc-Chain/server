@@ -9,10 +9,16 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
-  plugins: ['prettier', 'jest'],
+  plugins: ['prettier', 'jest', 'module-resolver'],
   rules: {
     'func-names': 'off',
     'arrow-parens': 'off',
     'prettier/prettier': 'error',
+    'module-resolver/use-alias': 2,
+  },
+  settings: {
+    'import/resolver': {
+      'babel-module': {},
+    },
   },
 };

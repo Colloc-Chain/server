@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon --exec babel-node -- src/index.js",
     "lint:check": "eslint 'src/**/*.js'",
     "lint:fix": "eslint 'src/**/*.js' --fix",
     "prettier": "prettier --write 'src/**/*.js'",
@@ -22,11 +22,17 @@
     "web3-eea": "^0.10.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^7.11.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.15.0",
+    "eslint-import-resolver-babel-module": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-module-resolver": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
     "jest": "^26.5.3",
