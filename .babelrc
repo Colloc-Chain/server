@@ -5,6 +5,7 @@
       {
         "root": ["./src"],
         "alias": {
+          "@root": "./src",
           "@libs": "./src/libs"
         }
       }
