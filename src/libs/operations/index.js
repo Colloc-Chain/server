@@ -8,6 +8,7 @@ const { getOneSmartContract, registerOneSmartContract } = require('@libs/mongo/s
 const {
   getAllUsers,
   getUserById,
+  login,
   getOwner,
   registerOneUser,
   deleteOneUser,
@@ -32,6 +33,7 @@ class Operations {
     this.getAllLeasesByOwnerId = getAllLeasesByOwnerId.bind(this);
     this.getAllUsers = getAllUsers.bind(this);
     this.getUserById = getUserById.bind(this);
+    this.login = login.bind(this);
     this.updateOneUser = updateOneUser.bind(this);
     this.deleteUser = deleteOneUser.bind(this);
   }
@@ -50,15 +52,16 @@ class Operations {
     return this.web3.eth.accounts.create();
   }
 
-  async createLandlordAccount(firstname, lastname) {
+  async createLandlordAccount(firstname, lastname, email, password) {
     const userAccount = this.createWeb3Account(this.web3);
     await this.ownerAccount.registerLandlord(userAccount.address);
-    return registerOneUser(firstname, lastname, 'landlord', userAccount.privateKey);
+    // prettier-ignore
+    return registerOneUser(firstname, lastname, email, password, 'landlord', userAccount.privateKey);
   }
 
-  async createTenantAccount(firstname, lastname) {
+  async createTenantAccount(firstname, lastname, email, password) {
     const userAccount = this.createWeb3Account(this.web3);
-    return registerOneUser(firstname, lastname, 'tenant', userAccount.privateKey);
+    return registerOneUser(firstname, lastname, email, password, 'tenant', userAccount.privateKey);
   }
 
   // prettier-ignore

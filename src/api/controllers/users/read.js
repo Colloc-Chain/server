@@ -19,7 +19,24 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const { user, token } = await OperationsManager.login(email, password);
+
+    if (!user) {
+      res.status(401);
+      throw new Error('Login: Invalid credentials');
+    }
+
+    res.status(200).json({ user, token });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   getUsers,
   getUser,
+  login,
 };

@@ -10,6 +10,33 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) => {
+  try {
+    const { user } = req;
+    user.tokens = user.tokens.filter(({ token }) => token !== req.token);
+
+    await user.save();
+    res.status(200).json({ message: 'Successful logout' });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const logoutAll = async (req, res, next) => {
+  try {
+    const { user } = req;
+    user.tokens = Array(0);
+
+    await user.save();
+
+    res.status(200).json({ message: 'Successful logout on all devices' });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   updateUser,
+  logout,
+  logoutAll,
 };
