@@ -9,8 +9,9 @@ To make it work create a `.env` file in the root and add the following:
 ```bash
 # server/.env
 
-NODE_ENV=development
 PORT=5000
+CORS_ORIGIN=http://localhost:3000
+JWT_SECRET=1234
 
 # PROD
 WEB3_URI=http://localhost:8545
