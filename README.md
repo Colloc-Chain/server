@@ -14,11 +14,11 @@ CORS_ORIGIN=http://localhost:3000
 JWT_SECRET=1234
 
 # PROD
-WEB3_URI=http://localhost:8545
-MONGO_URI=mongodb://localhost:27017/colloc-chain-prod
+WEB3_URI_PROD=<vm_ip_address>:8545
+MONGO_URI_PROD=mongodb://localhost:27017/colloc-chain-prod
 
 # DEV
-WEB3_URI_DEV=http://localhost:8545
+WEB3_URI_DEV=<vm_ip_address>:8545
 MONGO_URI_DEV=mongodb://localhost:27017/colloc-chain-dev
 ```
 
