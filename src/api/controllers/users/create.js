@@ -30,7 +30,25 @@ const createLandlordAccount = async (req, res, next) => {
   }
 };
 
+const createOwnerAccount = async (req, res, next) => {
+  try {
+    const { firstname, lastname, email, password, privateKey } = req.body;
+    const result = await OperationsManager.registerOneUser(
+      firstname,
+      lastname,
+      email,
+      password,
+      'owner',
+      privateKey,
+    );
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   createTenantAccount,
   createLandlordAccount,
+  createOwnerAccount,
 };

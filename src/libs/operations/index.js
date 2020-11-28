@@ -28,6 +28,7 @@ class Operations {
     this.init();
     this.getSmartContract = getOneSmartContract.bind(this);
     this.registerOneSmartContract = registerOneSmartContract.bind(this);
+    this.registerOneUser = registerOneUser.bind(this);
     this.getAllLeases = getAllLeases.bind(this);
     this.getOneLeaseById = getOneLeaseById.bind(this);
     this.getAllLeasesByOwnerId = getAllLeasesByOwnerId.bind(this);

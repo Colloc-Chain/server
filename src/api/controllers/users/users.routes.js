@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { auth } = require('@root/middlewares/auth');
-const { createTenantAccount, createLandlordAccount } = require('./create');
+const { createTenantAccount, createLandlordAccount, createOwnerAccount } = require('./create');
 const { getUser, getUsers, login } = require('./read');
 const { updateUser, logout, logoutAll } = require('./update');
 const { deleteUser } = require('./delete');
@@ -10,6 +10,7 @@ router.get('/user/:id', auth, getUser);
 
 router.post('/user/register/tenant', createTenantAccount);
 router.post('/user/register/landlord', createLandlordAccount);
+router.post('/user/register/owner', createOwnerAccount);
 router.post('/user/login', login);
 
 router.put('/user/update', updateUser);
