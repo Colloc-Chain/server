@@ -94,7 +94,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmI2OGI4OGIxMTEzNTE5MDM0YzYyZGQiLCJpYXQiOjE2MDU3OTg3OTJ9.PoQPrEVw6xu70Pvg1iwbqRZKUCXqHYphYuKP1gEffTA",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmI3ZWE3MDJkZDczODA0NmI1OTgyYWMiLCJpYXQiOjE2MDU4OTQwNTksImV4cCI6MTYwNTg5NDA4OX0.vVFkr-O8wRARXTUREFExqQPRoLglptGRXhz6lS3Asm0",
 									"type": "string"
 								}
 							]
@@ -135,7 +135,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstname\": \"Landlord\",\n    \"lastname\": \"Landlord\"\n}"
+							"raw": "{\n    \"firstname\": \"Landlord\",\n    \"lastname\": \"Landlord\",\n    \"email\": \"tenant@gmail.com\",\n    \"password\": \"1234\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/user/register/landlord",
@@ -510,7 +510,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmI3ZWE3MDJkZDczODA0NmI1OTgyYWMiLCJpYXQiOjE2MDU4OTQwMTcsImV4cCI6MTYwNTg5NDA0N30.iJu3jsUTQ69sbiwAVBPHylsPk9TlXG43U7-4Y6yr5mE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmI4MDgwZTZiNDgwZTMxYTA1NjEzZDEiLCJpYXQiOjE2MDU4OTYyMDYsImV4cCI6MTYwNTg5OTgwNn0.2dA_rNaAK0nCEc5r9zKKgKyT6bnlkC3_K9nc-93wUdo",
 									"type": "string"
 								}
 							]
