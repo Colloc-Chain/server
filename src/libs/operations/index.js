@@ -53,6 +53,12 @@ class Operations {
     return this.web3.eth.accounts.create();
   }
 
+  async getERCNameAndSymbol(erc) {
+    const name = erc === 'erc20' ? await this.erc20.name() : await this.erc721.name();
+    const symbol = erc === 'erc20' ? await this.erc20.symbol() : await this.erc721.symbol();
+    return { name, symbol };
+  }
+
   async createLandlordAccount(firstname, lastname, email, password) {
     const userAccount = this.createWeb3Account(this.web3);
     await this.ownerAccount.registerLandlord(userAccount.address);

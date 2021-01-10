@@ -7,6 +7,14 @@ ERC20.prototype.contract = function () {
   return this.contract;
 };
 
+ERC20.prototype.name = function () {
+  return this.contract.methods.name().call();
+};
+
+ERC20.prototype.symbol = function () {
+  return this.contract.methods.symbol().call();
+};
+
 ERC20.prototype.totalSupply = function () {
   return this.contract.methods.totalSupply().call();
 };

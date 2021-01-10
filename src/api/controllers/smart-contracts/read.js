@@ -1,5 +1,15 @@
 const { OperationsManager } = require('@libs/operations');
 
+const getERCNameAndSymbol = async (req, res, next) => {
+  try {
+    const { erc } = req.params;
+    const result = await OperationsManager.getERCNameAndSymbol(erc);
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const getSmartContract = async (req, res, next) => {
   try {
     const { erc } = req.params;
@@ -12,4 +22,5 @@ const getSmartContract = async (req, res, next) => {
 
 module.exports = {
   getSmartContract,
+  getERCNameAndSymbol,
 };
