@@ -35,8 +35,30 @@ const logoutAll = async (req, res, next) => {
   }
 };
 
+const deposit = async (req, res, next) => {
+  try {
+    const { id, amount } = req.body;
+    const result = await OperationsManager.deposit(id, amount);
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const withdraw = async (req, res, next) => {
+  try {
+    const { id, amount } = req.body;
+    const result = await OperationsManager.withdraw(id, amount);
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   updateUser,
   logout,
   logoutAll,
+  deposit,
+  withdraw,
 };

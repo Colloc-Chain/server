@@ -8,12 +8,12 @@ Tenant.prototype = Object.create(Account.prototype);
 Tenant.prototype.constructor = Tenant;
 
 Tenant.prototype.deposit = function (amount) {
-  const payload = this.erc20.deposit(this.account.address, amount);
+  const payload = this.erc20.deposit(amount);
   return this.sendTransaction(payload, this.erc20.address);
 };
 
 Tenant.prototype.withdraw = function (amount) {
-  const payload = this.erc20.withdraw(this.account.address, amount);
+  const payload = this.erc20.withdraw(amount);
   return this.sendTransaction(payload, this.erc20.address);
 };
 

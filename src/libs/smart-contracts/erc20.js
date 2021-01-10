@@ -3,10 +3,6 @@ function ERC20(web3, address, abi) {
   this.contract = new web3.eth.Contract(abi, address);
 }
 
-ERC20.prototype.address = function () {
-  return this.address;
-};
-
 ERC20.prototype.contract = function () {
   return this.contract;
 };
@@ -19,8 +15,8 @@ ERC20.prototype.balanceOf = function (address) {
   return this.contract.methods.balanceOf(address).call();
 };
 
-ERC20.prototype.deposit = function (address, amount) {
-  return this.contract.methods.deposit(address, amount).encodeABI();
+ERC20.prototype.deposit = function (amount) {
+  return this.contract.methods.deposit(amount).encodeABI();
 };
 
 ERC20.prototype.withdraw = function (amount) {

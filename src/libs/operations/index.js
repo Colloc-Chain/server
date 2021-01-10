@@ -94,6 +94,62 @@ class Operations {
     await userAccount.removeLease(tokenId);
     return removeLease(leaseId);
   }
+
+  async getUserBalanceById(userId) {
+    const { balance } = await this.getUserById(userId);
+    return balance;
+  }
+
+  async deposit(userId, amount) {
+    const { status, privateKey, balance } = await this.getUserById(userId);
+
+    if (status !== 'tenant') {
+      throw new Error('only tenant can deposit');
+    }
+
+    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
+    const userAccount = await accountFactory.create();
+    const { status: transactionPassed } = await userAccount.deposit(amount);
+
+    if (transactionPassed) {
+      const filter = { _id: userId };
+      const values = {
+        $set: {
+          balance: balance + amount,
+        },
+      };
+
+      await this.updateOneUser(filter, values);
+    }
+
+    return transactionPassed;
+  }
+
+  async withdraw(userId, amount) {
+    const { status, privateKey, balance } = await this.getUserById(userId);
+
+    if (status !== 'tenant') {
+      throw new Error('only tenant can withdraw');
+    }
+
+    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
+    const userAccount = await accountFactory.create();
+
+    const { status: transactionPassed } = await userAccount.withdraw(amount);
+
+    if (transactionPassed) {
+      const filter = { _id: userId };
+      const values = {
+        $set: {
+          balance: balance - amount,
+        },
+      };
+
+      await this.updateOneUser(filter, values);
+    }
+
+    return transactionPassed;
+  }
 }
 
 const OperationsManager = new Operations();
