@@ -45,8 +45,8 @@ class Operations {
     this.erc20 = new ERC20(this.web3, erc20Address, erc20Abi);
     this.erc721 = new ERC721(this.web3, erc721Address, erc721Abi);
     const { privateKey } = await getOwner();
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    this.ownerAccount = await accountFactory.create();
+    this.accountFactory = new AccountFactory(this.web3, this.erc20, this.erc721);
+    this.ownerAccount = await this.accountFactory.create(privateKey);
   }
 
   createWeb3Account() {
@@ -73,8 +73,7 @@ class Operations {
       throw new Error(`createLease: user ${userId} not landlord`);
     }
 
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    const userAccount = await accountFactory.create();
+    const userAccount = await this.accountFactory.create(privateKey);
     // get tokenId before creating new one to preserve same index => tokenId starts at 0
     const tokenId = await this.erc721.getTotalTokensCreated();
     await userAccount.createLease(price, maxTenants, tenants, tokenURI);
@@ -89,8 +88,7 @@ class Operations {
       throw new Error(`deleteLease: user ${userId} not landlord or not owner of this lease`);
     }
 
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    const userAccount = await accountFactory.create();
+    const userAccount = await this.accountFactory.create(privateKey);
     await userAccount.removeLease(tokenId);
     return removeLease(leaseId);
   }
@@ -107,8 +105,7 @@ class Operations {
       throw new Error('only tenant can deposit');
     }
 
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    const userAccount = await accountFactory.create();
+    const userAccount = await this.accountFactory.create(privateKey);
     const { status: transactionPassed } = await userAccount.deposit(amount);
 
     if (transactionPassed) {
@@ -132,8 +129,7 @@ class Operations {
       throw new Error('only tenant can withdraw');
     }
 
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    const userAccount = await accountFactory.create();
+    const userAccount = await this.accountFactory.create(privateKey);
 
     const { status: transactionPassed } = await userAccount.withdraw(amount);
 
