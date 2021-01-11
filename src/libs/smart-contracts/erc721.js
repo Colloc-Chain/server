@@ -3,12 +3,16 @@ function ERC721(web3, address, abi) {
   this.contract = new web3.eth.Contract(abi, address);
 }
 
-ERC721.prototype.address = function () {
-  return this.address;
-};
-
 ERC721.prototype.contract = function () {
   return this.contract;
+};
+
+ERC721.prototype.name = function () {
+  return this.contract.methods.name().call();
+};
+
+ERC721.prototype.symbol = function () {
+  return this.contract.methods.symbol().call();
 };
 
 ERC721.prototype.getTotalTokensCreated = function () {

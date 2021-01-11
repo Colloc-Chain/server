@@ -19,6 +19,16 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getUserBalanceById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = +(await OperationsManager.getUserBalanceById(id));
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -38,5 +48,6 @@ const login = async (req, res, next) => {
 module.exports = {
   getUsers,
   getUser,
+  getUserBalanceById,
   login,
 };

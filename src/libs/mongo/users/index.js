@@ -9,8 +9,14 @@ function getAllUsers() {
   return User.find({});
 }
 
-function getUserById(id) {
-  return User.findById(id);
+async function getUserById(id) {
+  const user = await User.findById(id);
+
+  if (!user) {
+    throw new Error('User non-existent');
+  }
+
+  return user;
 }
 
 function getUserByJwt(id, token) {

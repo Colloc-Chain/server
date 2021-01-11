@@ -45,12 +45,18 @@ class Operations {
     this.erc20 = new ERC20(this.web3, erc20Address, erc20Abi);
     this.erc721 = new ERC721(this.web3, erc721Address, erc721Abi);
     const { privateKey } = await getOwner();
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    this.ownerAccount = await accountFactory.create();
+    this.accountFactory = new AccountFactory(this.web3, this.erc20, this.erc721);
+    this.ownerAccount = await this.accountFactory.create(privateKey);
   }
 
   createWeb3Account() {
     return this.web3.eth.accounts.create();
+  }
+
+  async getERCNameAndSymbol(erc) {
+    const name = erc === 'erc20' ? await this.erc20.name() : await this.erc721.name();
+    const symbol = erc === 'erc20' ? await this.erc20.symbol() : await this.erc721.symbol();
+    return { name, symbol };
   }
 
   async createLandlordAccount(firstname, lastname, email, password) {
@@ -73,8 +79,7 @@ class Operations {
       throw new Error(`createLease: user ${userId} not landlord`);
     }
 
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    const userAccount = await accountFactory.create();
+    const userAccount = await this.accountFactory.create(privateKey);
     // get tokenId before creating new one to preserve same index => tokenId starts at 0
     const tokenId = await this.erc721.getTotalTokensCreated();
     await userAccount.createLease(price, maxTenants, tenants, tokenURI);
@@ -89,10 +94,63 @@ class Operations {
       throw new Error(`deleteLease: user ${userId} not landlord or not owner of this lease`);
     }
 
-    const accountFactory = new AccountFactory(this.web3, privateKey, this.erc20, this.erc721);
-    const userAccount = await accountFactory.create();
+    const userAccount = await this.accountFactory.create(privateKey);
     await userAccount.removeLease(tokenId);
     return removeLease(leaseId);
+  }
+
+  async getUserBalanceById(userId) {
+    const { balance } = await this.getUserById(userId);
+    return balance;
+  }
+
+  async deposit(userId, amount) {
+    const { status, privateKey, balance } = await this.getUserById(userId);
+
+    if (status !== 'tenant') {
+      throw new Error('only tenant can deposit');
+    }
+
+    const userAccount = await this.accountFactory.create(privateKey);
+    const { status: transactionPassed } = await userAccount.deposit(amount);
+
+    if (transactionPassed) {
+      const filter = { _id: userId };
+      const values = {
+        $set: {
+          balance: balance + amount,
+        },
+      };
+
+      await this.updateOneUser(filter, values);
+    }
+
+    return transactionPassed;
+  }
+
+  async withdraw(userId, amount) {
+    const { status, privateKey, balance } = await this.getUserById(userId);
+
+    if (status !== 'tenant') {
+      throw new Error('only tenant can withdraw');
+    }
+
+    const userAccount = await this.accountFactory.create(privateKey);
+
+    const { status: transactionPassed } = await userAccount.withdraw(amount);
+
+    if (transactionPassed) {
+      const filter = { _id: userId };
+      const values = {
+        $set: {
+          balance: balance - amount,
+        },
+      };
+
+      await this.updateOneUser(filter, values);
+    }
+
+    return transactionPassed;
   }
 }
 

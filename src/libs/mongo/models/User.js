@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    balance: {
+      type: Number,
+      default: 0,
+    },
     tokens: [
       {
         token: {
