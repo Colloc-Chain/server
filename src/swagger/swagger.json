@@ -1,0 +1,1046 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "CollocChain API Documentation",
+    "version": "1.0.0",
+    "title": "CollocChain"
+  },
+  "host": "35.155.55.49:5000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Lease"
+    },
+    {
+      "name": "Smart Contract"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Returns all users",
+        "description": "Returns a list containing all user objects",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Returns the user correspond to the id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "ObjectID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/user/balance/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Returns user balance",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "ObjectID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "integer",
+                  "example": 1000
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected Error"
+          }
+        }
+      }
+    },
+    "/user/deposit": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Deposit amount to user account",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Balance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "boolean",
+                  "description": "deposit processed succesfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/withdraw": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Withdraw amount from user account",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Balance"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "boolean",
+                  "description": "withdraw processed succesfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/Login"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/logout-all": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout all - Remove all tokens of user",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/register/tenant": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Register a user as a tenant",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountRegistration"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/register/landlord": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Register a user as a landlord",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AccountRegistration"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user information",
+        "description": "Too flexible endpoint - Allow to update a user by specifying any fields",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "filter": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "User ObjectID"
+                    }
+                  }
+                },
+                "values": {
+                  "type": "object",
+                  "properties": {
+                    "firstname": {
+                      "type": "string"
+                    },
+                    "lastname": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/delete/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "ID of the user to deleted",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/leases/all": {
+      "get": {
+        "tags": [
+          "Lease"
+        ],
+        "summary": "Returns all leases",
+        "description": "Returns a list containing all lease objects",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "items": {
+                    "$ref": "#/definitions/Lease"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lease/{id}": {
+      "get": {
+        "tags": [
+          "Lease"
+        ],
+        "summary": "Returns one lease",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "$ref": "#/definitions/Lease"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Lease not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/leases/{id}": {
+      "get": {
+        "tags": [
+          "Lease"
+        ],
+        "summary": "Returns all landlord leases",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "landlord id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "items": {
+                    "$ref": "#/definitions/Lease"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lease/create": {
+      "post": {
+        "tags": [
+          "Lease"
+        ],
+        "summary": "Create lease",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "userId": {
+                  "type": "string",
+                  "description": "User ID must be landlord"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "tenants": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "size": {
+                  "type": "integer",
+                  "description": "size in square meter"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer"
+                },
+                "rooms": {
+                  "type": "integer"
+                },
+                "maxTenants": {
+                  "type": "integer"
+                },
+                "tokenURI": {
+                  "type": "string",
+                  "description": "token URI for smart contract"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Unexpected error - User is not be landlord"
+          }
+        }
+      }
+    },
+    "/lease/delete": {
+      "delete": {
+        "tags": [
+          "Lease"
+        ],
+        "summary": "Delete lease",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "ownerId": {
+                  "type": "string"
+                },
+                "leaseId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/smart-contract/name-symbol/{erc}": {
+      "get": {
+        "tags": [
+          "Smart Contract"
+        ],
+        "summary": "Get name and symbol of ERC",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "erc",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "properties": {
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "symbol": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/smart-contract/{erc}": {
+      "get": {
+        "tags": [
+          "Smart Contract"
+        ],
+        "summary": "Get smart contract address and abi from MongoDB",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "erc",
+            "type": "string",
+            "enum": [
+              "erc20",
+              "erc721"
+            ],
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesful operation"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/smart-contract/register": {
+      "post": {
+        "tags": [
+          "Smart Contract"
+        ],
+        "summary": "Register a new smart contract into MongoDB",
+        "description": "Overrides smart contract documents to avoid dealing with multiple smart contracts - Only used when deploying new smart contracts.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "erc": {
+                  "type": "string",
+                  "enum": [
+                    "erc20",
+                    "erc721"
+                  ]
+                },
+                "address": {
+                  "type": "string",
+                  "description": "Smart contract address"
+                },
+                "abi": {
+                  "type": "string",
+                  "description": "Smart contract ABI stringified"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/smart-contract/delete": {
+      "delete": {
+        "tags": [
+          "Smart Contract"
+        ],
+        "summary": "Delete a smart contract document in MongoDB",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "erc": {
+                  "type": "string",
+                  "enum": [
+                    "erc20",
+                    "erc721"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your bearer token"
+    }
+  },
+  "definitions": {
+    "AccountRegistration": {
+      "type": "object",
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "description": "User status",
+          "enum": [
+            "tenant",
+            "landlord"
+          ]
+        },
+        "privateKey": {
+          "type": "string"
+        },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Balance": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "integer",
+          "format": "int64",
+          "example": 500
+        }
+      }
+    },
+    "Lease": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "tokenId": {
+          "type": "integer"
+        },
+        "ownerId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "tenants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "size": {
+          "type": "integer",
+          "description": "size in square meter"
+        },
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "rooms": {
+          "type": "integer"
+        },
+        "maxTenants": {
+          "type": "integer"
+        },
+        "tokenURI": {
+          "type": "string",
+          "description": "token URI for smart contract"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "description": "User status",
+          "enum": [
+            "tenant",
+            "landlord"
+          ]
+        },
+        "privateKey": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
