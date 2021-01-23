@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const Web3 = require('web3');
 const Web3EEA = require('web3-eea');
-const { __web3_uri__ } = require('@libs/config');
+const { __web3_uri__, __node_private_key__, __eth_to_fund__ } = require('@libs/config');
 const AccountFactory = require('@libs/account-factory');
 const { ERC20, ERC721 } = require('@libs/smart-contracts');
 const { getOneSmartContract, registerOneSmartContract } = require('@libs/mongo/smart-contracts');
@@ -59,8 +59,30 @@ class Operations {
     return { name, symbol };
   }
 
+  /**
+   * The only purpose of this function is to "BYPASS" the issue with the non free-gas network
+   * We encountered this issue at the very end of the project so the lib was not built with that in mind
+   * Before that, the free-gas network was working perfectly but it seems the Besu doesn't load correctly the config file anymore
+   * The main problem we can have with this workaround is when the account funding other accounts runs out of ether
+   * @param {string} address - address to fund
+   */
+  async fundAccount(address) {
+    const nodeAccount = this.web3.eth.accounts.privateKeyToAccount(__node_private_key__);
+    const nonce = await this.web3.eth.getTransactionCount(nodeAccount.address);
+    const tx = {
+      to: address,
+      value: this.web3.utils.toHex(this.web3.utils.toWei(__eth_to_fund__, 'ether')),
+      nonce,
+      gas: 100000,
+    };
+
+    const { rawTransaction } = await nodeAccount.signTransaction(tx);
+    return this.web3.eth.sendSignedTransaction(rawTransaction);
+  }
+
   async createLandlordAccount(firstname, lastname, email, password) {
     const userAccount = this.createWeb3Account(this.web3);
+    await this.fundAccount(userAccount.address);
     await this.ownerAccount.registerLandlord(userAccount.address);
     // prettier-ignore
     return registerOneUser(firstname, lastname, email, password, 'landlord', userAccount.privateKey);
@@ -68,6 +90,7 @@ class Operations {
 
   async createTenantAccount(firstname, lastname, email, password) {
     const userAccount = this.createWeb3Account(this.web3);
+    await this.fundAccount(userAccount.address);
     return registerOneUser(firstname, lastname, email, password, 'tenant', userAccount.privateKey);
   }
 
