@@ -5,6 +5,14 @@ function getOwner() {
   return User.findOwner();
 }
 
+function getAllLandlords(projection) {
+  return User.findLandlords(projection);
+}
+
+function getAllTenants(projection) {
+  return User.findTenants(projection);
+}
+
 function getAllUsers() {
   return User.find({});
 }
@@ -64,6 +72,8 @@ module.exports = {
   getUserByJwt,
   login,
   getOwner,
+  getAllLandlords,
+  getAllTenants,
   registerOneUser,
   updateOneUser,
   deleteOneUser,
