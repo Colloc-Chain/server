@@ -14,8 +14,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/users",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/users",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -181,7 +181,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmI3ZWE3MDJkZDczODA0NmI1OTgyYWMiLCJpYXQiOjE2MDU4OTQwNTksImV4cCI6MTYwNTg5NDA4OX0.vVFkr-O8wRARXTUREFExqQPRoLglptGRXhz6lS3Asm0",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDBhYzcxZWQwNzMxNDU1NzI0ZWM0YjUiLCJpYXQiOjE2MTEzMTkwNzAsImV4cCI6MTYxMTMyMjY3MH0.P6QG07a2Gi-T9lUUj-BDTQpjAeXvh_m2OIIbo0eOWNU",
 									"type": "string"
 								}
 							]
@@ -189,8 +189,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/user/5ff2ecc9fb72c22abd1fb0f9",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/user/600ac71ed0731455724ec4b5",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -201,7 +201,7 @@
 							"path": [
 								"api",
 								"user",
-								"5ff2ecc9fb72c22abd1fb0f9"
+								"600ac71ed0731455724ec4b5"
 							]
 						}
 					},
@@ -256,11 +256,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstname\": \"Landlord\",\n    \"lastname\": \"Landlord\",\n    \"email\": \"landlord@gmail.com\",\n    \"password\": \"1234\"\n}"
+							"raw": "{\n    \"firstname\": \"john\",\n    \"lastname\": \"doe\",\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"1234\"\n}"
 						},
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/user/register/landlord",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/user/register/landlord",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -299,8 +299,8 @@
 							"raw": "{\n    \"firstname\": \"Landlord\",\n    \"lastname\": \"Landlord\",\n    \"email\": \"landlord@gmail.com\",\n    \"password\": \"1234\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/register/landlord",
-							"protocol": "http",
+							"raw": "https://localhost:5000/api/user/register/landlord",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
@@ -333,11 +333,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstname\": \"Hello\",\n    \"lastname\": \"World\",\n    \"email\": \"hello.world@gmail.com\",\n    \"password\": \"1234\"\n}"
+							"raw": "{\n    \"firstname\": \"bob\",\n    \"lastname\": \"alain\",\n    \"email\": \"bob.alain@gmail.com\",\n    \"password\": \"1234\"\n}"
 						},
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/user/register/tenant",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/user/register/tenant",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -373,11 +373,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstname\": \"Hello\",\n    \"lastname\": \"World\",\n    \"email\": \"hello.world@gmail.com\",\n    \"password\": \"1234\"\n}"
+							"raw": "{\n    \"firstname\": \"testtest\",\n    \"lastname\": \"testtest\",\n    \"email\": \"testtest.testtest@gmail.com\",\n    \"password\": \"1234\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:5000/api/user/register/tenant",
-							"protocol": "http",
+							"raw": "https://localhost:5000/api/user/register/tenant",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
@@ -420,7 +420,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/user/balance/5ffb57d0d95ab054fe330118",
+							"raw": "http://35.155.55.49:5000/api/user/balance/600611410f68ff6c8e577483",
 							"protocol": "http",
 							"host": [
 								"35",
@@ -433,7 +433,7 @@
 								"api",
 								"user",
 								"balance",
-								"5ffb57d0d95ab054fe330118"
+								"600611410f68ff6c8e577483"
 							]
 						}
 					},
@@ -457,7 +457,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"5ffb57d0d95ab054fe330118\",\r\n    \"amount\": 100\r\n}"
+							"raw": "{\r\n    \"id\": \"600611410f68ff6c8e577483\",\r\n    \"amount\": 100\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:5000/api/user/deposit",
@@ -493,11 +493,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"5ffb57d0d95ab054fe330118\",\r\n    \"amount\": 100\r\n}"
+							"raw": "{\r\n    \"id\": \"600c32a4ffb47c6e2fe220da\",\r\n    \"amount\": 100\r\n}"
 						},
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/user/deposit",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/user/deposit",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -635,6 +635,96 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetAllLandlords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://35.155.55.49:5000/api/users/landlords",
+							"protocol": "https",
+							"host": [
+								"35",
+								"155",
+								"55",
+								"49"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"landlords"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllLandlords - local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5000/api/users/landlords",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"landlords"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTenants - local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5000/api/users/tenants",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"tenants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTenants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://35.155.55.49:5000/api/users/tenants",
+							"protocol": "https",
+							"host": [
+								"35",
+								"155",
+								"55",
+								"49"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"tenants"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -654,8 +744,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/smart-contract/erc721",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/smart-contract/erc20",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -666,7 +756,7 @@
 							"path": [
 								"api",
 								"smart-contract",
-								"erc721"
+								"erc20"
 							]
 						}
 					},
@@ -934,11 +1024,11 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"5ff351a1fb72c22abd1fb0fc\",\n    \"type\": \"studio\",\n    \"size\": 50,\n    \"address\": \"34 rue Star\",\n    \"city\": \"Toulouse\",\n    \"price\": 1500,\n    \"rooms\": 4,\n    \"maxTenants\": 4,\n    \"tenants\": [],\n    \"tokenURI\": \"https://www.grimsborgir.com/wp-content/uploads/2016/01/Studio-Apartment-A.jpg\"\n}"
+							"raw": "{\n    \"userId\": \"601279ed18c0197c347c7be7\",\n    \"type\": \"studio\",\n    \"size\": 50,\n    \"address\": \"34 rue Star\",\n    \"city\": \"Toulouse\",\n    \"price\": 1500,\n    \"rooms\": 4,\n    \"maxTenants\": 4,\n    \"tenants\": [],\n    \"tokenURI\": \"https://www.grimsborgir.com/wp-content/uploads/2016/01/Studio-Apartment-A.jpg\"\n}"
 						},
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/lease/create",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/lease/create",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -997,8 +1087,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/leases/all",
-							"protocol": "http",
+							"raw": "https://35.155.55.49:5000/api/leases/all",
+							"protocol": "https",
 							"host": [
 								"35",
 								"155",
@@ -1021,8 +1111,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/api/leases/all",
-							"protocol": "http",
+							"raw": "https://localhost:5000/api/leases/all",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
@@ -1042,7 +1132,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://35.155.55.49:5000/api/lease/5f9b08ca9cec054a87812fdb",
+							"raw": "http://35.155.55.49:5000/api/lease/5ff351bffb72c22abd1fb0fe",
 							"protocol": "http",
 							"host": [
 								"35",
@@ -1054,7 +1144,7 @@
 							"path": [
 								"api",
 								"lease",
-								"5f9b08ca9cec054a87812fdb"
+								"5ff351bffb72c22abd1fb0fe"
 							]
 						}
 					},
@@ -1339,7 +1429,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmI4MDgwZTZiNDgwZTMxYTA1NjEzZDEiLCJpYXQiOjE2MDU4OTYyMDYsImV4cCI6MTYwNTg5OTgwNn0.2dA_rNaAK0nCEc5r9zKKgKyT6bnlkC3_K9nc-93wUdo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmYyZWNjOWZiNzJjMjJhYmQxZmIwZjkiLCJpYXQiOjE2MTEwOTcwMzQsImV4cCI6MTYxMTEwMDYzNH0.HhV0fpa9qcdMn4i5iMHB5xqWj-N3brGB5xW8I28syrA",
 									"type": "string"
 								}
 							]
@@ -1456,6 +1546,240 @@
 								"api",
 								"user",
 								"logout-all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "eventeum",
+			"item": [
+				{
+					"name": "RegisterEvent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contractAddress\": \"0x30753E4A8aad7F8597332E813735Def5dD395028\",\r\n    \"eventSpecification\": {\r\n        \"eventName\": \"Transfer\",\r\n        \"indexedParameterDefinitions\": [\r\n            { \"position\": 0, \"type\": \"ADDRESS\"},\r\n            { \"position\": 1, \"type\": \"ADDRESS\"}\r\n        ],\r\n        \"nonIndexedParameterDefinitions\": [\r\n            { \"position\": 2, \"type\": \"UINT256\"}\r\n        ]\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "https://35.155.55.49:8060/api/rest/v1/event-filter",
+							"protocol": "https",
+							"host": [
+								"35",
+								"155",
+								"55",
+								"49"
+							],
+							"port": "8060",
+							"path": [
+								"api",
+								"rest",
+								"v1",
+								"event-filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterEvent - Local",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contractAddress\": \"0xFB88dE099e13c3ED21F80a7a1E49f8CAEcF10df6\",\r\n    \"eventSpecification\": {\r\n        \"eventName\": \"Transfer\",\r\n        \"indexedParameterDefinitions\": [\r\n            { \"position\": 0, \"type\": \"ADDRESS\"},\r\n            { \"position\": 1, \"type\": \"ADDRESS\"}\r\n        ],\r\n        \"nonIndexedParameterDefinitions\": [\r\n            { \"position\": 2, \"type\": \"UINT256\"}\r\n        ]\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8060/api/rest/v1/event-filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"api",
+								"rest",
+								"v1",
+								"event-filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListRegisteredEvents - Local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8060/api/rest/v1/event-filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"api",
+								"rest",
+								"v1",
+								"event-filter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UnregisterEvent - Local",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8060/api/rest/v1/event-filter/5c51f774-1b46-4519-904b-4355b178154a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"api",
+								"rest",
+								"v1",
+								"event-filter",
+								"5c51f774-1b46-4519-904b-4355b178154a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterTransactionMonitor - Local",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"type\": \"TO_ADDRESS\",\r\n\t\"transactionIdentifierValue\": \"0x8ACEe021a27779d8E98B9650722676B850b25E11\",\r\n\t\"nodeName\": \"default\",\r\n    \"statuses\": [\"FAILED\", \"UNCONFIRMED\", \"CONFIRMED\"]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8060/api/rest/v1/transaction?identifier=0x8ACEe021a27779d8E98B9650722676B850b25E11&nodeName=default",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"api",
+								"rest",
+								"v1",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "0x8ACEe021a27779d8E98B9650722676B850b25E11"
+								},
+								{
+									"key": "nodeName",
+									"value": "default"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterTxMonitorToAddress - Local",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"type\": \"FROM_ADDRESS\",\r\n\t\"transactionIdentifierValue\": \"0xeFceaB97B803c4eE6f7C16DEC4E7623b7835936b\",\r\n\t\"nodeName\": \"default\",\r\n    \"statuses\": [\"FAILED\", \"UNCONFIRMED\", \"CONFIRMED\", \"INVALIDATED\"]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8060/api/rest/v1/transaction?identifier=0xeFceaB97B803c4eE6f7C16DEC4E7623b7835936b&nodeName=default",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"api",
+								"rest",
+								"v1",
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "identifier",
+									"value": "0xeFceaB97B803c4eE6f7C16DEC4E7623b7835936b"
+								},
+								{
+									"key": "nodeName",
+									"value": "default"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBlockEvent - local",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5000/api/eventeum",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"eventeum"
 							]
 						}
 					},
