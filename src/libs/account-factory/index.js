@@ -17,7 +17,9 @@ AccountFactory.prototype.create = async function (privateKey) {
     return new Owner(this.web3, account, this.erc20, this.erc721);
   }
 
+  // const isLandlord = await this.erc721.isLandlord(account.address);
   const isLandlord = await this.erc721.isLandlord(account.address);
+  console.log(isLandlord);
 
   if (isLandlord) {
     console.log('is landlord');

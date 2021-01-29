@@ -13,6 +13,10 @@ function getAllLeasesByOwnerId(ownerId, projection) {
   return Lease.find({ ownerId }, { ...projection, __v: 0 });
 }
 
+function getLeaseByTenantId(tenantId) {
+  return Lease.findOne({ 'tenants.tenantId': tenantId });
+}
+
 // prettier-ignore
 function registerLease(tokenId, ownerId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
   const lease = new Lease({
@@ -36,10 +40,21 @@ function removeLease(id) {
   return Lease.findByIdAndDelete(id);
 }
 
+function addTenantToLease(leaseId, tenantId) {
+  return Lease.updateOne({ _id: leaseId }, { $push: { tenants: { tenantId } } });
+}
+
+function removeTenantFromLease(leaseId, tenantId) {
+  return Lease.updateOne({ _id: leaseId }, { $pullAll: { tenants: tenantId } });
+}
+
 module.exports = {
   getAllLeases,
   getOneLeaseById,
   getAllLeasesByOwnerId,
   registerLease,
   removeLease,
+  addTenantToLease,
+  removeTenantFromLease,
+  getLeaseByTenantId,
 };

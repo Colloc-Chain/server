@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { auth } = require('@root/middlewares/auth');
 const { createTenantAccount, createLandlordAccount, createOwnerAccount } = require('./create');
 const { getUser, getUsers, getUserBalanceById, login } = require('./read');
-const { updateUser, logout, logoutAll, deposit, withdraw } = require('./update');
+const { updateUser, logout, logoutAll, deposit, withdraw, payRent } = require('./update');
 const { deleteUser } = require('./delete');
 
 router.get('/users', getUsers);
@@ -15,6 +15,8 @@ router.post('/user/register/owner', createOwnerAccount);
 router.post('/user/login', login);
 router.post('/user/deposit', deposit);
 router.post('/user/withdraw', withdraw);
+
+router.post('/lease/pay', payRent);
 
 router.put('/user/update', updateUser);
 router.put('/user/logout', auth, logout);

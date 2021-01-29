@@ -37,4 +37,9 @@ Tenant.prototype.decreaseAllowance = function (spender, amount) {
   return this.sendTransaction(payload, this.erc20.address);
 };
 
+Tenant.prototype.payRent = function (tenant, lanldord) {
+  const payload = this.erc721.payRent(tenant, lanldord);
+  return this.sendTransaction(payload, this.erc20.address);
+};
+
 module.exports = Tenant;

@@ -35,8 +35,17 @@ ERC721.prototype.balanceOf = function (address) {
   return this.contract.methods.balanceOf(address).call();
 };
 
-ERC721.prototype.isLandlord = async function (address) {
-  return this.contract.methods.isLandlord(address).call();
+/* ERC721.prototype.isLandlord = async function (address) {
+   
+  const result = this.contract.methods.isLandlord(address).call();
+  console.log(`Landlord? ${result}`);
+  return result;
+}; */
+
+ERC721.prototype.isLandlord = function (address) {
+  const result = this.contract.methods.isLandlord(address).call();
+  console.log(`Landlord? ${result}`);
+  return result;
 };
 
 ERC721.prototype.registerLandlord = function (address) {
@@ -68,6 +77,10 @@ ERC721.prototype.createLease = function (price, maxTenants, tenantsAddresses, to
 
 ERC721.prototype.removeLease = function (tokenId) {
   return this.contract.methods.removeLease(tokenId).encodeABI();
+};
+
+ERC721.prototype.payRent = function (tenant, landlord) {
+  return this.contract.methods.PayRent(tenant, landlord).encodeABI();
 };
 
 module.exports = ERC721;

@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
 const Web3 = require('web3');
 const Web3EEA = require('web3-eea');
 const { __web3_uri__, __node_private_key__, __eth_to_fund__ } = require('@libs/config');
@@ -10,16 +11,21 @@ const {
   getUserById,
   login,
   getOwner,
+  getUserByEmail,
   registerOneUser,
-  deleteOneUser,
   updateOneUser,
+  deleteOneUser,
+  getUsersByIds,
 } = require('@libs/mongo/users');
 const {
   getAllLeases,
   getOneLeaseById,
   getAllLeasesByOwnerId,
+  getLeaseByTenantId,
   registerLease,
   removeLease,
+  addTenantToLease,
+  removeTenantFromLease,
 } = require('@libs/mongo/leases');
 
 class Operations {
@@ -32,8 +38,11 @@ class Operations {
     this.getAllLeases = getAllLeases.bind(this);
     this.getOneLeaseById = getOneLeaseById.bind(this);
     this.getAllLeasesByOwnerId = getAllLeasesByOwnerId.bind(this);
+    this.getLeaseByTenantId = getLeaseByTenantId.bind(this);
     this.getAllUsers = getAllUsers.bind(this);
     this.getUserById = getUserById.bind(this);
+    this.getUsersByIds = getUsersByIds.bind(this);
+    this.getUserByEmail = getUserByEmail.bind(this);
     this.login = login.bind(this);
     this.updateOneUser = updateOneUser.bind(this);
     this.deleteUser = deleteOneUser.bind(this);
@@ -68,7 +77,7 @@ class Operations {
    */
   async fundAccount(address) {
     const nodeAccount = this.web3.eth.accounts.privateKeyToAccount(__node_private_key__);
-    const nonce = await this.web3.eth.getTransactionCount(nodeAccount.address);
+    const nonce = await this.web3.eth.getTransactionCount(nodeAccount.address); //
     const tx = {
       to: address,
       value: this.web3.utils.toHex(this.web3.utils.toWei(__eth_to_fund__, 'ether')),
@@ -92,34 +101,6 @@ class Operations {
     const userAccount = this.createWeb3Account(this.web3);
     await this.fundAccount(userAccount.address);
     return registerOneUser(firstname, lastname, email, password, 'tenant', userAccount.privateKey);
-  }
-
-  // prettier-ignore
-  async createLease(userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
-    const { status, privateKey } = await this.getUserById(userId);
-
-    if (status !== 'landlord') {
-      throw new Error(`createLease: user ${userId} not landlord`);
-    }
-
-    const userAccount = await this.accountFactory.create(privateKey);
-    // get tokenId before creating new one to preserve same index => tokenId starts at 0
-    const tokenId = await this.erc721.getTotalTokensCreated();
-    await userAccount.createLease(price, maxTenants, tenants, tokenURI);
-    return registerLease(tokenId, userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI);
-  }
-
-  async deleteLease(userId, leaseId) {
-    const { status, privateKey } = await this.getUserById(userId);
-    const { ownerId, tokenId } = await this.getOneLeaseById(leaseId);
-
-    if (status !== 'landlord' || userId !== ownerId) {
-      throw new Error(`deleteLease: user ${userId} not landlord or not owner of this lease`);
-    }
-
-    const userAccount = await this.accountFactory.create(privateKey);
-    await userAccount.removeLease(tokenId);
-    return removeLease(leaseId);
   }
 
   async getUserBalanceById(userId) {
@@ -152,6 +133,7 @@ class Operations {
   }
 
   async withdraw(userId, amount) {
+    // todo check balance
     const { status, privateKey, balance } = await this.getUserById(userId);
 
     if (status !== 'tenant') {
@@ -175,8 +157,126 @@ class Operations {
 
     return transactionPassed;
   }
-}
 
+  // prettier-ignore
+  async createLease(userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI) {
+    const { status, privateKey } = await this.getUserById(userId);
+
+    if (status !== 'landlord') {
+      throw new Error(`createLease: user ${userId} not landlord`);
+    }
+
+    const userAccount = await this.accountFactory.create(privateKey);
+
+    // get tokenId before creating new one to preserve same index => tokenId starts at 0
+    const tokenId = await this.erc721.getTotalTokensCreated();
+    await userAccount.createLease(price, maxTenants, tenants, tokenURI);
+    return registerLease(tokenId, userId, type, size, address, city, price, rooms, maxTenants, tenants, tokenURI);
+  }
+
+  async deleteLease(userId, leaseId) {
+    const { status, privateKey } = await this.getUserById(userId);
+    const { ownerId, tokenId } = await this.getOneLeaseById(leaseId);
+
+    if (status !== 'landlord' || userId !== ownerId) {
+      throw new Error(`deleteLease: user ${userId} not landlord or not owner of this lease`);
+    }
+
+    const userAccount = await this.accountFactory.create(privateKey);
+    await userAccount.removeLease(tokenId);
+    return removeLease(leaseId);
+  }
+
+  async getTenantsByLeaseId(leaseId) {
+    const { tenants } = await this.getOneLeaseById(leaseId);
+
+    const userIds = [];
+    tenants.forEach(element => {
+      userIds.push(element.tenantId);
+    });
+
+    const tenantsOfLease = this.getUsersByIds(userIds);
+    return tenantsOfLease;
+  }
+
+  async payRent(tenantId) {
+    const tenant = await this.getUserById(tenantId);
+
+    if (tenant.status !== 'tenant') {
+      throw new Error('only tenant can pay rent');
+    }
+
+    const lease = await this.getLeaseByTenantId(tenant._id);
+
+    const rentShare = lease.price / lease.tenants.length;
+
+    if (tenant.balance < rentShare) {
+      throw new Error(`Not enough founds, you need ${lease.price} to pay rent`);
+    }
+
+    const landlord = await this.getUserById(lease.ownerId);
+
+    const tenantAccount = await this.accountFactory.create(tenant.privateKey);
+
+    const tenantAddress = this.web3.eth.accounts.privateKeyToAccount(tenant.privateKey);
+    const landlordAddress = this.web3.eth.accounts.privateKeyToAccount(landlord.privateKey);
+
+    const { status: transactionPassed } = await tenantAccount.payRent(
+      tenantAddress,
+      landlordAddress,
+    );
+
+    if (transactionPassed) {
+      const filter = { _id: tenant._id };
+      const values = {
+        $set: {
+          balance: tenant.balance - rentShare,
+        },
+      };
+
+      await this.updateOneUser(filter, values);
+    }
+
+    return transactionPassed;
+  }
+
+  async addTenant(email, leaseId) {
+    // todo check if landlord
+    const tenant = await this.getUserByEmail(email);
+
+    if (tenant.status !== 'tenant') {
+      throw new Error(`addTenant: user ${email} not tenant`);
+    }
+
+    const { address } = this.web3.eth.accounts.privateKeyToAccount(tenant.privateKey);
+
+    const { tokenId, ownerId } = await this.getOneLeaseById(leaseId);
+
+    const landlord = await this.getUserById(ownerId);
+    const landlordAccount = await this.accountFactory.create(landlord.privateKey);
+
+    await landlordAccount.registerTenant(tokenId, address);
+    return addTenantToLease(leaseId, tenant._id);
+  }
+
+  async removeTenant(email, leaseId) {
+    const tenant = await this.getUserByEmail(email);
+
+    if (tenant.status !== 'tenant') {
+      throw new Error(`addTenant: user ${email} not tenant`);
+    }
+
+    const { address } = this.web3.eth.accounts.privateKeyToAccount(tenant.privateKey);
+
+    const { tokenId, ownerId } = await this.getOneLeaseById(leaseId);
+
+    const landlord = await this.getUserById(ownerId);
+    const landlordAccount = await this.accountFactory.create(landlord.privateKey);
+
+    await landlordAccount.removeTenant(tokenId, address);
+    return removeTenantFromLease(leaseId, tenant._id);
+  }
+}
 const OperationsManager = new Operations();
 
 module.exports = { OperationsManager };

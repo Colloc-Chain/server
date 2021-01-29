@@ -29,8 +29,20 @@ const getLeasesByOwnerId = async (req, res, next) => {
   }
 };
 
+const getTenantsByLeaseId = async (req, res, next) => {
+  try {
+    const { leaseId } = req.params;
+    console.log(leaseId);
+    const result = await OperationsManager.getTenantsByLeaseId(leaseId);
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   getAllLeases,
   getLeaseById,
   getLeasesByOwnerId,
+  getTenantsByLeaseId,
 };

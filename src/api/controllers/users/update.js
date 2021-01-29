@@ -55,10 +55,21 @@ const withdraw = async (req, res, next) => {
   }
 };
 
+const payRent = async (req, res, next) => {
+  try {
+    const { tenantid } = req.body;
+    const result = await OperationsManager.payRent(tenantid);
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   updateUser,
   logout,
   logoutAll,
   deposit,
   withdraw,
+  payRent,
 };

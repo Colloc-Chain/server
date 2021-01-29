@@ -19,8 +19,28 @@ async function getUserById(id) {
   return user;
 }
 
+async function getUsersByIds(ids) {
+  const users = await User.find().where('_id').in(ids).exec();
+
+  if (!users) {
+    throw new Error('Users non-existent');
+  }
+
+  return users;
+}
+
 function getUserByJwt(id, token) {
   return User.findOne({ _id: id, 'tokens.token': token });
+}
+
+async function getUserByEmail(userEmail) {
+  const user = await User.findOne({ email: userEmail });
+
+  if (!user) {
+    throw new Error('User non-existent');
+  }
+
+  return user;
 }
 
 async function login(email, password) {
@@ -67,4 +87,6 @@ module.exports = {
   registerOneUser,
   updateOneUser,
   deleteOneUser,
+  getUserByEmail,
+  getUsersByIds,
 };
