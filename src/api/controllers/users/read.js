@@ -29,6 +29,24 @@ const getUserBalanceById = async (req, res, next) => {
   }
 };
 
+const getAllLandlords = async (_, res, next) => {
+  try {
+    const result = await OperationsManager.getAllLandlords();
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const getAllTenants = async (_, res, next) => {
+  try {
+    const result = await OperationsManager.getAllTenants();
+    res.status(200).json({ result });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -49,5 +67,7 @@ module.exports = {
   getUsers,
   getUser,
   getUserBalanceById,
+  getAllLandlords,
+  getAllTenants,
   login,
 };

@@ -12,6 +12,8 @@ const {
   login,
   getOwner,
   getUserByEmail,
+  getAllLandlords,
+  getAllTenants,
   registerOneUser,
   updateOneUser,
   deleteOneUser,
@@ -40,6 +42,8 @@ class Operations {
     this.getAllLeasesByOwnerId = getAllLeasesByOwnerId.bind(this);
     this.getLeaseByTenantId = getLeaseByTenantId.bind(this);
     this.getAllUsers = getAllUsers.bind(this);
+    this.getAllLandlords = getAllLandlords.bind(this);
+    this.getAllTenants = getAllTenants.bind(this);
     this.getUserById = getUserById.bind(this);
     this.getUsersByIds = getUsersByIds.bind(this);
     this.getUserByEmail = getUserByEmail.bind(this);

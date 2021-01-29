@@ -7,11 +7,15 @@ You need to install MongoDB on your machine. Follow these [instructions](https:/
 To make it work create a `.env` file in the root and add the following:
 
 ```bash
-# server/.env
+# .env
 
 PORT=5000
 CORS_ORIGIN=http://localhost:3000
 JWT_SECRET=1234
+
+# ugly - nothing at stake here - only to make setup faster
+NODE_PRIVATE_KEY=8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63
+ETH_TO_FUND=1
 
 # PROD
 WEB3_URI_PROD=<vm_ip_address>:8545

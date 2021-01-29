@@ -46,6 +46,52 @@
         }
       }
     },
+    "/users/landlords": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Returns all landlords",
+        "description": "Returns a list containing all user objects",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/tenants": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Returns all tenants",
+        "description": "Returns a list containing all user objects",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/{id}": {
       "get": {
         "tags": [
@@ -68,10 +114,9 @@
           "200": {
             "description": "Successful operation",
             "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "integer",
-                "format": "int32"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
               }
             }
           }
@@ -882,11 +927,7 @@
         },
         "status": {
           "type": "string",
-          "description": "User status",
-          "enum": [
-            "tenant",
-            "landlord"
-          ]
+          "description": "User status"
         },
         "privateKey": {
           "type": "string"

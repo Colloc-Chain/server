@@ -61,6 +61,14 @@ UserSchema.statics.findOwner = function (projection) {
   return this.findOne({ status: 'owner' }, { ...projection, __v: 0 });
 };
 
+UserSchema.statics.findLandlords = function (projection) {
+  return this.find({ status: 'landlord' }, { ...projection, __v: 0 });
+};
+
+UserSchema.statics.findTenants = function (projection) {
+  return this.find({ status: 'tenant' }, { ...projection, __v: 0 });
+};
+
 UserSchema.methods.generateAuthToken = async function () {
   const user = this;
   const validDuration = 60 * 60;
